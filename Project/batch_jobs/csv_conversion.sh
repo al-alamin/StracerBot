@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=3
-#SBATCH --time=10:10:00
-#SBATCH --mem=120GB
+#SBATCH --cpus-per-task=8
+#SBATCH --time=20:10:00
+#SBATCH --mem=16GB
 #SBATCH --job-name=data_extraction
 ##SBATCH --mail-type=END
 ##SBATCH --mail-user=mdabdullahal.alamin@ucalgary.ca
@@ -21,7 +21,7 @@ echo "Necessary env loaded"
 
 python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/test/Posts.xml
 echo "XML converted to CSV"
-python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/unix/Posts.xml
+# python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/unix/Posts.xml
 python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/superuser/Posts.xml
 python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/serverfault/Posts.xml
 python ../Scripts/csv_conversion.py /work/disa_lab/Alamin/SOTorrent/askubuntu/Posts.xml
