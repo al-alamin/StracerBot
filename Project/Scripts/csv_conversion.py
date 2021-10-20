@@ -16,7 +16,9 @@ pd.options.mode.chained_assignment = None
 import csv
 import math
 import sys
+# import lxml.etree  as ET
 import lxml.etree  as ET
+# import xml.etree.ElementTree as ET
 
 def save_df(df, file_name, append=False):
     if append:
@@ -53,7 +55,8 @@ def convert_xml_to_csv_iteratively(XML_file, columns, output_csv_file = None, th
         output_csv_file = XML_file[:-4] + ".csv"
 
     print("Going to Convert XML files to CSV file")
-    context = ET.iterparse(XML_file, events=("end",))
+    context = ET.iterparse(XML_file, recover = True, events=("end",))
+    # huge_tree = True
 
     # Variables to process the output
     total_questions = 0
@@ -61,7 +64,7 @@ def convert_xml_to_csv_iteratively(XML_file, columns, output_csv_file = None, th
     rows = []
     cur_count = 0    
     append = False
-
+    _, root = next(context)
     for event, elem in context:
         if elem.tag == "row":
             dic = {}
@@ -69,9 +72,10 @@ def convert_xml_to_csv_iteratively(XML_file, columns, output_csv_file = None, th
                 dic[col] = elem.attrib.get(col, '')
             rows.append(dic)
              # progress
-            if total_questions % 100000 == 0:
+            if total_questions % 1000000 == 0:
                 print('Total Questions: %d' % total_questions)
             elem.clear()
+            root.clear()
             total_questions += 1
             cur_count += 1
         if cur_count > threshold:
@@ -97,10 +101,8 @@ def convert_xml_to_csv_iteratively(XML_file, columns, output_csv_file = None, th
 # file_name = os.path.join(file_name, "Posts.xml")
 # convert_xml_to_csv(file_name)
 
-xml_file = os.path.normpath(sys.argv[1])
+xml_file = sys.argv[1]
 csv_file = None
-if len(sys.argv) > 2:
-    csv_file = os.path.normpath(sys.argv[2])
 print("xml_file: %s csv_file: %s" % (xml_file, csv_file))
 # convert_xml_to_csv(xml_file, csv_file)
 
@@ -108,6 +110,6 @@ print("xml_file: %s csv_file: %s" % (xml_file, csv_file))
 COLS = ["Id", "PostTypeId", "AcceptedAnswerId", "ParentId", "CreationDate", "DeletionDate", "Score", "ViewCount", "Body",
         "OwnerUserId", "OwnerDisplayName", "LastEditorUserId", "LastEditorDisplayName", "LastEditDate", "LastActivityDate",
         "Title", "Tags", "AnswerCount", "CommentCount", "FavoriteCount", "ClosedDate", "CommunityOwnedDate", "ContentLicense"]
-convert_xml_to_csv_iteratively(xml_file, columns = COLS, output_csv_file = csv_file, threshold=10000000)
+convert_xml_to_csv_iteratively(xml_file, columns = COLS, output_csv_file = csv_file, threshold=1000000)
 
 print("%s file converted to CSV" % (xml_file))
