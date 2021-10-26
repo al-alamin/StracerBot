@@ -14,8 +14,6 @@ Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack e
 
 
 ## Tasks
-    => Learn to write conditional batch jobs, i.e., job 2 will start after job 1 is finished successfully
-
 * **Dataset Processing:**
     * Move Dataset to ARC cluster. [Completed]
     * Extracting Dataset using 7zip. [Completed]
@@ -34,6 +32,7 @@ Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack e
 * High Computational tasks: I'll try to complete these tasks if I can manage time.
     * Rewrite some of the data preprocessing jobs with DASK instead of Pandas. This is supposed to be at least 10 times faster. Using the multi processing power of the DASK library will enable to process Significantly larger dataset than the current one used in this project.
     * Rewrite some of the result generation code with Apache Spark. Being able to write parallize code using Spack will enable to generate result in a very scalable manner.
+    * Implement a distributed key-value storage with Spark. This system will help to quickly fetch important related information from around 60M Stack exchange posts.
 
 ## Batch Jobs Overview:
 * data_extraction.sh:
@@ -47,6 +46,13 @@ Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack e
 ## Scripts:
 *   csv_conversion.py:
         This contains necessary python code (Pandas) to convert a XML file to a CSV file. As it turns out the Pandas API for conversion of Large XML files does not work properly. So I had to write a different method that would read a large XML file iteratively and build Pandas dataframe from it and append it to the CSV file
+*   extract_code_segment.py:
+        Orginal Posts contains a lot of metadata information such as ["Id", "PostTypeId", "AcceptedAnswerId", "ParentId", "CreationDate", "DeletionDate", "Score", "ViewCount", "Body", "OwnerUserId", "OwnerDisplayName", "LastEditorUserId", "LastEditorDisplayName", "LastEditDate", "LastActivityDate", "Title", "Tags", "AnswerCount", "CommentCount", "FavoriteCount", "ClosedDate", "CommunityOwnedDate", "ContentLicense"]. The body contains the original posts html content. But for this project we are mostly interested in the error messages that are shared in the Stack Overflow posts. So, in this script I am extracting the code segment from the Post's HTML body. It is easy but computationally expensive to extract these code segments because the code segment resides under \<code> error message \</code> tag.
+*   create_tdidf_document.py:
+        This script contains necessary code to create Term Frequency – Inverse Document Frequency(TF-IDF). This TDIDF will help to find relevent posts with the user submitted errors messages very quickly. Because total dataset size contains more then 50M posts and more than 100M code segments.
+*   extract_metadata.py:
+        Our original Posts.csv is very large in size and for the most part we do not need all those information. So, this script will extact necessary metadata from the Posts.csv and store the information in python object. So that in the future this python object can be quickly loaded into memory and gerenerate search result.
+
 
 ## Dataset Overflow:
 * Stack exchange has several Entities such as Posts, Comment, Users. Different attibutes of these entities are outlined below:
