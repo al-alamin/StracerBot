@@ -64,4 +64,4 @@ def extract_code_segment(input_file, chunk_size=10000000):
 
 input_file = sys.argv[1]
 print("input_file: %s" % (input_file))
-extract_code_segment(input_file, chunk_size=10000000)
+extract_code_segment(input_file, chunk_size=20000000)

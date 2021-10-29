@@ -58,7 +58,7 @@ def remove_directory(path):
 def remove_file(file_name):
     if (os.path.isfile(file_name)):
         print("Output file %s exists and removing it." % file_name)
-        os.remove(output_csv_file)
+        os.remove(file_name)
 
 def create_director(dir):
     if(not os.path.exists(dir)):
@@ -73,10 +73,10 @@ def create_director(dir):
 def get_all_codes(BASE_DIR, file_name = "Posts_code.csv"):
     code_segment_file = os.path.join(BASE_DIR, file_name)
     df = pd.read_csv(code_segment_file)
-    print("Len of code segment: %d" % len(df))
+    print("Len of code segment: %d" % len(df), flush=True)
     ALL_CODE_SEGMENTS = df['code'].tolist()
     ALL_IDs = df['Id'].tolist()    
-    print(len(ALL_CODE_SEGMENTS))
+    print(len(ALL_CODE_SEGMENTS), flush=True)
     return ALL_CODE_SEGMENTS, ALL_IDs
 
 
@@ -85,21 +85,29 @@ def get_all_codes(BASE_DIR, file_name = "Posts_code.csv"):
 
 def get_similarity_metrics(Codes, BASE_DIR):
     Gen_docs = [ word_tokenize(text.lower()) for text in Codes] # tokenize
+    print("Code segment has been tokenized", flush=True)
+    print(sys.getsizeof(Gen_docs), flush=True)
     Dictionary = gensim.corpora.Dictionary(Gen_docs) # word => Id
-    print("Dictionary has been created %d" % len(Dictionary))
+    print("Dictionary has been created %d" % len(Dictionary), flush=True)
+    save_obj(Dictionary, BASE_DIR, "Dictionary")
     # print(Dictionary.token2id) # word id and its frequency in each document
     Corpus = [Dictionary.doc2bow(gen_doc) for gen_doc in Gen_docs] # word id and its frequency in each document
-    print("Corpus has been created")
+    print("Corpus has been created", flush=True)
+    save_obj(Corpus, BASE_DIR, "Corpus")
+    del Gen_docs
+    print("Deleting Gen_docs", flush=True)
     # print(word_tokenize(err1))
     TDIDF = gensim.models.TfidfModel(Corpus)
-    print("TDIDF has been created") 
+    print("TDIDF has been created", flush=True)
+    save_obj(TDIDF, BASE_DIR, "TDIDF")
 
     sim_path = os.path.join(BASE_DIR, "TDIDF/")
     remove_directory(sim_path)
     create_director(sim_path)
     Sims = gensim.similarities.Similarity(sim_path, TDIDF[Corpus],
                                         num_features=len(Dictionary))
-    print("Sims has been created")
+    save_obj(Sims, BASE_DIR, "Sims")
+    print("Sims has been created", flush=True)
     return Dictionary, Corpus, TDIDF, Sims
 
 
@@ -108,15 +116,22 @@ def get_similarity_metrics(Codes, BASE_DIR):
 BASE_DIR = sys.argv[1]
 
 ALL_CODE_SEGMENTS, ALL_IDs = get_all_codes(BASE_DIR)
-save_obj(ALL_IDs, BASE_DIR, "ALL_IDs")
-print("Code segment extracted")
+# save_obj(ALL_IDs, BASE_DIR, "ALL_IDs")
+# save_obj(ALL_CODE_SEGMENTS, BASE_DIR, "ALL_CODE_SEGMENTS")
 
+# print("Loading code segment from pickle rather than csv file", flush=True)
+# ALL_CODE_SEGMENTS = load_obj(BASE_DIR, "ALL_CODE_SEGMENTS")
+
+
+print("Code segment extracted", flush=True)
+
+print("About to create similarity metrics", flush=True)
 Dictionary, Corpus, TDIDF, Sims = get_similarity_metrics(ALL_CODE_SEGMENTS, BASE_DIR)
 
-save_obj(Dictionary, BASE_DIR, "Dictionary")
-save_obj(Corpus, BASE_DIR, "Corpus")
-save_obj(TDIDF, BASE_DIR, "TDIDF")
-save_obj(Sims, BASE_DIR, "Sims")
+# save_obj(Dictionary, BASE_DIR, "Dictionary")
+# save_obj(Corpus, BASE_DIR, "Corpus")
+# save_obj(TDIDF, BASE_DIR, "TDIDF")
+# save_obj(Sims, BASE_DIR, "Sims")
 print("Saved all objects")
 
 

@@ -2,13 +2,14 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --time=23:10:00
+#SBATCH --time=15:10:00
 #SBATCH --mem=80GB
 #SBATCH --job-name=data_extraction
-#SBATCH --mail-type=BEGIN
+##SBATCH --mail-type=BEGIN
 #SBATCH --mail-type=END
 #SBATCH --mail-user=mdabdullahal.alamin@ucalgary.ca
 #SBATCH --output=job_output/Code_segment_extraction_job_%j.txt
+set -e
 echo Job started
 date
 echo $1
