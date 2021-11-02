@@ -1,0 +1,171 @@
+ImportError                               Traceback (most recent call last)
+~/.conda/envs/latest/lib/python3.7/site-packages/dask/dataframe/__init__.py in <module>
+      2     from ..base import compute
+----> 3     from . import backends, dispatch, rolling
+      4     from .core import (
+
+~/.conda/envs/latest/lib/python3.7/site-packages/dask/dataframe/backends.py in <module>
+      3 import numpy as np
+----> 4 import pandas as pd
+      5 from pandas.api.types import (
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/__init__.py in <module>
+     54 
+---> 55 from pandas.core.api import (
+     56     # dtype
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/api.py in <module>
+     14 from pandas.core.algorithms import factorize, unique, value_counts
+---> 15 from pandas.core.arrays import Categorical
+     16 from pandas.core.arrays.boolean import BooleanDtype
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/arrays/__init__.py in <module>
+     10 from pandas.core.arrays.integer import IntegerArray, integer_array
+---> 11 from pandas.core.arrays.interval import IntervalArray
+     12 from pandas.core.arrays.numpy_ import PandasArray, PandasDtype
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/arrays/interval.py in <module>
+     44 from pandas.core.indexers import check_array_indexer
+---> 45 from pandas.core.indexes.base import ensure_index
+     46 
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/indexes/base.py in <module>
+     76 from pandas.core.ops.invalid import make_invalid_op
+---> 77 from pandas.core.strings import StringMethods
+     78 
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/strings/__init__.py in <module>
+     29 
+---> 30 from pandas.core.strings.accessor import StringMethods
+     31 from pandas.core.strings.base import BaseStringArrayMethods
+
+~/.conda/envs/latest/lib/python3.7/site-packages/pandas/core/strings/accessor.py in <module>
+     15 import pandas._libs.lib as lib
+---> 16 from pandas._typing import (
+     17     DtypeObj,
+
+ImportError: cannot import name 'DtypeObj' from 'pandas._typing' (/home/mdabdullahal.alamin/.conda/envs/latest/lib/python3.7/site-packages/pandas/_typing.py)
+
+The above exception was the direct cause of the following exception:
+
+ImportError                               Traceback (most recent call last)
+/tmp/ipykernel_4113141/1671061512.py in <module>
+----> 1 import dask.dataframe as dd
+      2 # df  = dd.read_csv(file_name)
+      3 # print(len(df))
+
+~/.conda/envs/latest/lib/python3.7/site-packages/dask/dataframe/__init__.py in <module>
+     58         '  python -m pip install "dask[dataframe]" --upgrade  # or python -m pip install'
+     59     )
+---> 60     raise ImportError(msg) from e
+
+ImportError: Dask dataframe requirements are not installed.
+
+Please either conda or pip install as follows:
+
+  conda install dask                     # either conda install
+  python -m pip install "dask[dataframe]" --upgrade  # or python -m pip install
+
+
+
+
+
+
+
+ModuleNotFoundError                       Traceback (most recent call last)
+<ipython-input-13-fbcaa98fd80d> in <module>
+----> 1 from sklearn.cross_validation import train_test_split
+      2 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
+
+ModuleNotFoundError: No module named 'sklearn.cross_validation'
+
+
+
+
+/home/mdabdullahal.alamin/.conda/envs/XGeoml/lib/python3.9/site-packages/sklearn/linear_model/_logistic.py:763: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+LogisticRegression()time: 29.8 ms
+
+
+
+
+
+ValueError                                Traceback (most recent call last)
+<ipython-input-20-f4fe1ec528a7> in <module>
+      7     exclude=None
+      8 )
+----> 9 automl.fit(X_train, y_train)
+     10 y_pred = automl.predict(X_test)
+
+~/.conda/envs/XGeoml/lib/python3.9/site-packages/autosklearn/estimators.py in fit(self, X, y, X_test, y_test, feat_type, dataset_name)
+    936         self.target_type = target_type
+    937 
+--> 938         super().fit(
+    939             X=X,
+    940             y=y,
+
+~/.conda/envs/XGeoml/lib/python3.9/site-packages/autosklearn/estimators.py in fit(self, **kwargs)
+    328         if self.automl_ is None:
+    329             self.automl_ = self.build_automl()
+--> 330         self.automl_.fit(load_models=self.load_models, **kwargs)
+    331 
+    332         return self
+
+~/.conda/envs/XGeoml/lib/python3.9/site-packages/autosklearn/automl.py in fit(self, X, y, X_test, y_test, feat_type, dataset_name, only_return_configuration_space, load_models)
+   1912         load_models: bool = True,
+   1913     ):
+-> 1914         return super().fit(
+   1915             X, y,
+   1916             X_test=X_test,
+
+~/.conda/envs/XGeoml/lib/python3.9/site-packages/autosklearn/automl.py in fit(self, X, y, task, X_test, y_test, feat_type, dataset_name, only_return_configuration_space, load_models, is_classification)
+    802         # == Perform dummy predictions
+    803         # Dummy prediction always have num_run set to 1
+--> 804         self.num_run += self._do_dummy_prediction(datamanager, num_run=1)
+    805 
+    806         # == RUN ensemble builder
+
+~/.conda/envs/XGeoml/lib/python3.9/site-packages/autosklearn/automl.py in _do_dummy_prediction(self, datamanager, num_run)
+    470                 )
+    471                 # Fail if dummy prediction fails.
+--> 472                 raise ValueError(
+    473                     "Dummy prediction failed with run state %s and additional output: %s."
+    474                     % (str(status), str(additional_info))
+
+ValueError: Dummy prediction failed with run state StatusType.MEMOUT and additional output: {'error': 'Memout (used more than 3072 MB).', 'configuration_origin': 'DUMMY'}.
+
+
+
+
+
+
+
+
+Error in callback <function LineWatcher.stop at 0x000002E15BFA01F0> (for post_run_cell):
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+~\anaconda3\envs\xgeoml\lib\site-packages\backcall\backcall.py in adapted(*args, **kwargs)
+    102                 kwargs.pop(name)
+    103 #            print(args, kwargs, unmatched_pos, cut_positional, unmatched_kw)
+--> 104             return callback(*args, **kwargs)
+    105 
+    106         return adapted
+
+~\anaconda3\envs\xgeoml\lib\site-packages\autotime.py in stop(self)
+     23         if self.start_time:
+     24             diff = time.time() - self.start_time
+---> 25             assert diff > 0
+     26             print('time: %s' % format_delta(diff))
+     27 
+
+AssertionError:
+
+
+
+  
