@@ -31,14 +31,30 @@
           The result summary.
         </div> -->
 
+
+
         <div class="jumbotron text-center">
-          The relevent posts that Matches the query are listed below:
-          <ul id="navigation" align="left">
+          
+          
+          <h6>Original query:</h4>
+            <pre> {{ query_message }} </pre>
+          
+            <br><br><br><br>
+
+          <h5> The relevent posts that Matches the query are listed below: </h5>
+          <ol id="navigation" align="left">
             {% for link in result %}
-                <li><a href="{{ link.url }}" target="_blank">Link {{ link.title }} </a></li>
-  
+                
+                <li>
+                  <a href="{{ link.url }}" target="_blank"> <b>Title: </b>Link {{ link.title }} </a>
+                  <p> <b>Similary Score: </b> {{ link.similarity_score }} </p>
+                  <p> <b> Summary of the Stack Overflow Post:</b> <br>
+                    {{ link.body_summary }} </p>
+                
+                </li>
+
             {% endfor %}
-            </ul>
+            </ol>
 
         </div>
 
