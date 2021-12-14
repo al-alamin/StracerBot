@@ -53,6 +53,9 @@ Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack e
 *   extract_metadata.py:
         Our original Posts.csv is very large in size and for the most part we do not need all those information. So, this script will extact necessary metadata from the Posts.csv and store the information in python object. So that in the future this python object can be quickly loaded into memory and gerenerate search result.
 
+## web-application:
+*   This folder contains the code for the flask web framework which is build to demonstrate the real time query. Inside this there is folder called template which contains the Jinja version of the HTML code.
+
 
 ## Dataset Overflow:
 * Stack exchange has several Entities such as Posts, Comment, Users. Different attibutes of these entities are outlined below:
@@ -63,7 +66,7 @@ Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack e
 
 
 
-## Links:
+<!-- ## Links:
 * https://rcs.ucalgary.ca/Apache_Spark_on_ARC
 * https://dev.to/coderasha/compare-documents-similarity-using-python-nlp-4odp
-* https://towardsdatascience.com/calculating-string-similarity-in-python-276e18a7d33a
+* https://towardsdatascience.com/calculating-string-similarity-in-python-276e18a7d33a -->

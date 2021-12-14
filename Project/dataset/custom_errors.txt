@@ -168,4 +168,708 @@ AssertionError:
 
 
 
+
+
+
+Epoch 1/100
+---------------------------------------------------------------------------
+InvalidArgumentError                      Traceback (most recent call last)
+<ipython-input-31-a2dda66f17dd> in <module>()
+      7             validation_steps = 50,
+      8             verbose = 2,
+----> 9             callbacks=[callbacks])
+
+6 frames
+/usr/local/lib/python3.7/dist-packages/keras/engine/training.py in fit(self, x, y, batch_size, epochs, verbose, callbacks, validation_split, validation_data, shuffle, class_weight, sample_weight, initial_epoch, steps_per_epoch, validation_steps, validation_batch_size, validation_freq, max_queue_size, workers, use_multiprocessing)
+   1182                 _r=1):
+   1183               callbacks.on_train_batch_begin(step)
+-> 1184               tmp_logs = self.train_function(iterator)
+   1185               if data_handler.should_sync:
+   1186                 context.async_wait()
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/def_function.py in __call__(self, *args, **kwds)
+    883 
+    884       with OptionalXlaContext(self._jit_compile):
+--> 885         result = self._call(*args, **kwds)
+    886 
+    887       new_tracing_count = self.experimental_get_tracing_count()
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/def_function.py in _call(self, *args, **kwds)
+    915       # In this case we have created variables on the first call, so we run the
+    916       # defunned version which is guaranteed to never create variables.
+--> 917       return self._stateless_fn(*args, **kwds)  # pylint: disable=not-callable
+    918     elif self._stateful_fn is not None:
+    919       # Release the lock early so that multiple threads can perform the call
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py in __call__(self, *args, **kwargs)
+   3038        filtered_flat_args) = self._maybe_define_function(args, kwargs)
+   3039     return graph_function._call_flat(
+-> 3040         filtered_flat_args, captured_inputs=graph_function.captured_inputs)  # pylint: disable=protected-access
+   3041 
+   3042   @property
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py in _call_flat(self, args, captured_inputs, cancellation_manager)
+   1962       # No tape is watching; skip to running the function.
+   1963       return self._build_call_outputs(self._inference_function.call(
+-> 1964           ctx, args, cancellation_manager=cancellation_manager))
+   1965     forward_backward = self._select_forward_and_backward_functions(
+   1966         args,
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py in call(self, ctx, args, cancellation_manager)
+    594               inputs=args,
+    595               attrs=attrs,
+--> 596               ctx=ctx)
+    597         else:
+    598           outputs = execute.execute_with_cancellation(
+
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/execute.py in quick_execute(op_name, num_outputs, inputs, attrs, ctx, name)
+     58     ctx.ensure_initialized()
+     59     tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+---> 60                                         inputs, attrs, num_outputs)
+     61   except core._NotOkStatusException as e:
+     62     if name is not None:
+
+InvalidArgumentError:  required broadcastable shapes
+      [[node binary_crossentropy/logistic_loss/mul (defined at <ipython-input-10-184f209c0d04>:9) ]] [Op:__inference_train_function_12499]
+
+Function call stack:
+train_function
+
+
   
+
+
+
+  =========> M1book import tensorflow
+https://stackoverflow.com/questions/68996176/tensorflow-2-5-mac-m1-installing-problem-compatibility-with-numpy-library-co
+
+
+  >>> import tensorflow as tf
+
+Traceback (most recent call last):
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/__init__.py", line 22, in <module>
+    from . import multiarray
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/multiarray.py", line 12, in <module>
+    from . import overrides
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/overrides.py", line 7, in <module>
+    from numpy.core._multiarray_umath import (
+ImportError: dlopen(/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/_multiarray_umath.cpython-39-darwin.so, 2): Library not loaded: @rpath/libcblas.3.dylib
+  Referenced from: /Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/_multiarray_umath.cpython-39-darwin.so
+  Reason: image not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/tensorflow/__init__.py", line 41, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/tensorflow/python/__init__.py", line 41, in <module>
+    from tensorflow.python.eager import context
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/tensorflow/python/eager/context.py", line 29, in <module>
+    import numpy as np
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/__init__.py", line 150, in <module>
+    from . import core
+  File "/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/__init__.py", line 48, in <module>
+    raise ImportError(msg)
+ImportError:
+
+IMPORTANT: PLEASE READ THIS FOR ADVICE ON HOW TO SOLVE THIS ISSUE!
+
+Importing the numpy C-extensions failed. This error can happen for
+many reasons, often due to issues with your setup or how NumPy was
+installed.
+
+We have compiled some common reasons and troubleshooting tips at:
+
+    https://numpy.org/devdocs/user/troubleshooting-importerror.html
+
+Please note and check the following:
+
+  * The Python version is: Python3.9 from "/Users/alamin/miniforge3/bin/python"
+  * The NumPy version is: "1.21.1"
+
+and make sure that they are the versions you expect.
+Please carefully study the documentation linked above for further help.
+
+Original error was: dlopen(/Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/_multiarray_umath.cpython-39-darwin.so, 2): Library not loaded: @rpath/libcblas.3.dylib
+  Referenced from: /Users/alamin/miniforge3/lib/python3.9/site-packages/numpy/core/_multiarray_umath.cpython-39-darwin.so
+  Reason: image not found
+
+
+
+
+
+
+
+
+
+===============>
+https://stackoverflow.com/questions/69950509/tensorflow-install-error-windows-longpath-support-not-enabled
+
+  --use-deprecated <feature>  Enable deprecated functionality, that will be removed in the future.
+
+C:\Users\mdabd>pip install tensorflow
+Collecting tensorflow
+  Downloading tensorflow-2.7.0-cp39-cp39-win_amd64.whl (430.8 MB)
+     |████████████████████████████████| 430.8 MB 42 kB/s
+Collecting flatbuffers<3.0,>=1.12
+  Using cached flatbuffers-2.0-py2.py3-none-any.whl (26 kB)
+Collecting libclang>=9.0.1
+  Using cached libclang-12.0.0-py2.py3-none-win_amd64.whl (13.1 MB)
+Collecting wheel<1.0,>=0.32.0
+  Using cached wheel-0.37.0-py2.py3-none-any.whl (35 kB)
+Collecting tensorboard~=2.6
+  Using cached tensorboard-2.7.0-py3-none-any.whl (5.8 MB)
+Collecting keras-preprocessing>=1.1.1
+  Using cached Keras_Preprocessing-1.1.2-py2.py3-none-any.whl (42 kB)
+Collecting opt-einsum>=2.3.2
+  Using cached opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+Collecting astunparse>=1.6.0
+  Using cached astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+Collecting termcolor>=1.1.0
+  Using cached termcolor-1.1.0.tar.gz (3.9 kB)
+  Preparing metadata (setup.py) ... done
+Collecting numpy>=1.14.5
+  Downloading numpy-1.21.4-cp39-cp39-win_amd64.whl (14.0 MB)
+     |████████████████████████████████| 14.0 MB 2.2 MB/s
+Collecting gast<0.5.0,>=0.2.1
+  Using cached gast-0.4.0-py3-none-any.whl (9.8 kB)
+Collecting wrapt>=1.11.0
+  Downloading wrapt-1.13.3-cp39-cp39-win_amd64.whl (34 kB)
+Collecting absl-py>=0.4.0
+  Using cached absl_py-1.0.0-py3-none-any.whl (126 kB)
+Collecting tensorflow-io-gcs-filesystem>=0.21.0
+  Downloading tensorflow_io_gcs_filesystem-0.22.0-cp39-cp39-win_amd64.whl (1.5 MB)
+     |████████████████████████████████| 1.5 MB 2.2 MB/s
+Collecting h5py>=2.9.0
+  Downloading h5py-3.6.0-cp39-cp39-win_amd64.whl (2.8 MB)
+     |████████████████████████████████| 2.8 MB 2.2 MB/s
+Collecting protobuf>=3.9.2
+  Downloading protobuf-3.19.1-cp39-cp39-win_amd64.whl (895 kB)
+     |████████████████████████████████| 895 kB 1.6 MB/s
+Collecting grpcio<2.0,>=1.24.3
+  Downloading grpcio-1.42.0-cp39-cp39-win_amd64.whl (3.3 MB)
+     |████████████████████████████████| 3.3 MB 3.3 MB/s
+Collecting typing-extensions>=3.6.6
+  Downloading typing_extensions-4.0.0-py3-none-any.whl (22 kB)
+Collecting keras<2.8,>=2.7.0rc0
+  Using cached keras-2.7.0-py2.py3-none-any.whl (1.3 MB)
+Requirement already satisfied: six>=1.12.0 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from tensorflow) (1.16.0)
+Collecting google-pasta>=0.1.1
+  Using cached google_pasta-0.2.0-py3-none-any.whl (57 kB)
+Collecting tensorflow-estimator<2.8,~=2.7.0rc0
+  Using cached tensorflow_estimator-2.7.0-py2.py3-none-any.whl (463 kB)
+Collecting markdown>=2.6.8
+  Using cached Markdown-3.3.6-py3-none-any.whl (97 kB)
+Collecting tensorboard-plugin-wit>=1.6.0
+  Using cached tensorboard_plugin_wit-1.8.0-py3-none-any.whl (781 kB)
+Collecting google-auth<3,>=1.6.3
+  Using cached google_auth-2.3.3-py2.py3-none-any.whl (155 kB)
+Collecting google-auth-oauthlib<0.5,>=0.4.1
+  Using cached google_auth_oauthlib-0.4.6-py2.py3-none-any.whl (18 kB)
+Collecting tensorboard-data-server<0.7.0,>=0.6.0
+  Using cached tensorboard_data_server-0.6.1-py3-none-any.whl (2.4 kB)
+Requirement already satisfied: requests<3,>=2.21.0 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from tensorboard~=2.6->tensorflow) (2.26.0)
+Requirement already satisfied: setuptools>=41.0.0 in c:\program files\windowsapps\pythonsoftwarefoundation.python.3.9_3.9.2544.0_x64__qbz5n2kfra8p0\lib\site-packages (from tensorboard~=2.6->tensorflow) (58.1.0)
+Collecting werkzeug>=0.11.15
+  Using cached Werkzeug-2.0.2-py3-none-any.whl (288 kB)
+Collecting pyasn1-modules>=0.2.1
+  Using cached pyasn1_modules-0.2.8-py2.py3-none-any.whl (155 kB)
+Collecting rsa<5,>=3.1.4
+  Using cached rsa-4.7.2-py3-none-any.whl (34 kB)
+Collecting cachetools<5.0,>=2.0.0
+  Using cached cachetools-4.2.4-py3-none-any.whl (10 kB)
+Collecting requests-oauthlib>=0.7.0
+  Using cached requests_oauthlib-1.3.0-py2.py3-none-any.whl (23 kB)
+Collecting importlib-metadata>=4.4
+  Using cached importlib_metadata-4.8.2-py3-none-any.whl (17 kB)
+Requirement already satisfied: charset-normalizer~=2.0.0 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from requests<3,>=2.21.0->tensorboard~=2.6->tensorflow) (2.0.7)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from requests<3,>=2.21.0->tensorboard~=2.6->tensorflow) (3.3)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from requests<3,>=2.21.0->tensorboard~=2.6->tensorflow) (2021.10.8)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in c:\users\mdabd\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages (from requests<3,>=2.21.0->tensorboard~=2.6->tensorflow) (1.26.7)
+Collecting zipp>=0.5
+  Using cached zipp-3.6.0-py3-none-any.whl (5.3 kB)
+Collecting pyasn1<0.5.0,>=0.4.6
+  Using cached pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
+Collecting oauthlib>=3.0.0
+  Using cached oauthlib-3.1.1-py2.py3-none-any.whl (146 kB)
+Using legacy 'setup.py install' for termcolor, since package 'wheel' is not installed.
+Installing collected packages: pyasn1, zipp, rsa, pyasn1-modules, oauthlib, cachetools, requests-oauthlib, importlib-metadata, google-auth, wheel, werkzeug, tensorboard-plugin-wit, tensorboard-data-server, protobuf, numpy, markdown, grpcio, google-auth-oauthlib, absl-py, wrapt, typing-extensions, termcolor, tensorflow-io-gcs-filesystem, tensorflow-estimator, tensorboard, opt-einsum, libclang, keras-preprocessing, keras, h5py, google-pasta, gast, flatbuffers, astunparse, tensorflow
+  WARNING: The scripts pyrsa-decrypt.exe, pyrsa-encrypt.exe, pyrsa-keygen.exe, pyrsa-priv2pub.exe, pyrsa-sign.exe and pyrsa-verify.exe are installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script wheel.exe is installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py.exe is installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown_py.exe is installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script google-oauthlib-tool.exe is installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+    Running setup.py install for termcolor ... done
+  WARNING: The script tensorboard.exe is installed in 'C:\Users\mdabd\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\mdabd\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python39\\site-packages\\tensorflow\\include\\external\\com_github_grpc_grpc\\src\\core\\ext\\filters\\client_channel\\lb_policy\\grpclb\\client_load_reporting_filter.h'
+HINT: This error might have occurred since this system does not have Windows Long Path support enabled. You can find information on how to enable this at https://pip.pypa.io/warnings/enable-long-paths
+
+
+
+
+
+
+
+
+
+
++++++++++++++++
+
+
+
+
+
+
+"<p>The important thing to remember about a <a href=""http://en.wikipedia.org/wiki/PID_controller"" rel=""nofollow"">PID</a> control loop is that each term is intended to dominate control at different times during a move.</p>
+
+<p>The proportional term is intended to dominate and provide a larger torque (or in your case speed) the further you are away from your target position.</p>
+
+<p>The derivative term is intended to dominate during the 'cruise' phase of your typical trapezoidal move. It helps to reign back a very high proportional term and limit runaway acceleration when you are far from your destination, but it can also help increase the speed at which you converge on your destination when you get close to it and the proportional term contributes much less.</p>
+
+<p>If you are using a velocity controller rather than a torque controller then the derivative term may actually be hidden inside your speed controller and not directly accessible to your PID loop. This can make control simpler (typically it will just accelerate as quickly as it can up to the desired speed or maximum speed, whichever is lower) but it can also make it less predictable. Often an overly aggressive D (or P) term can result in getting into a <a href=""http://en.wikipedia.org/wiki/Limit_cycle"" rel=""nofollow"">limit cycle</a> (often incorrectly called <a href=""http://en.wikipedia.org/wiki/Mechanical_resonance"" rel=""nofollow"">resonance</a> or <a href=""http://en.wikipedia.org/wiki/Oscillation"" rel=""nofollow"">oscillation</a> due to the sound of the motors humming or even screaming in this state, though <em>limit-cycle</em> is a much more accurate description).</p>
+
+<p>The integral term is there to correct for residual <a href=""http://en.wikipedia.org/wiki/PID_controller#Integral_term"" rel=""nofollow"">steady-state error</a>, that is where there is a persistent, long term difference between where you are being asked to go and where you actually are. Your current <code>correction</code> (really just tolerance) value works like the opposite of an integral term, it cuts the motor entirely when you are within a <a href=""http://en.wikipedia.org/wiki/Deadband"" rel=""nofollow"">deadband</a> around the desired position.</p>
+
+<p>Due to these factors, you will gain little from implementing a full PID loop unless you also plan in a velocity profile with a distinct accelerate, cruise &amp; decelerate phases.</p>
+
+<p>Also bear in mind that the deadband and lack of I term will mean that the final position will always be somewhat random and will most likely differ depending on which direction you approach the desired position. As such, your bi-directional repeatability could be much worse than your standard repeatability.</p>
+
+<p>For more information on the difference between accuracy, repeatability and resolution, see <a href=""http://www.me.mtu.edu/~microweb/chap2/ch2-1.htm"" rel=""nofollow"">this excellent description</a>. In your case, your resolution is your compass sensor, while both accuracy, repeatability are most likely limited by your <code>correction</code> value, since if the <code>correction</code> value is larger than your compass resolution, you are throwing away some of your positional accuracy in return for being able to turn off your motor when you are close.</p>
+"
+
+
+
+
+
+
+
+
+
+===============================================>
+
+
+
+(base) alamin@Mds-MacBook-Pro ~ % pip install gensim
+Collecting gensim
+  Downloading gensim-4.1.2.tar.gz (23.2 MB)
+     |████████████████████████████████| 23.2 MB 26.7 MB/s 
+Collecting numpy>=1.17.0
+  Using cached numpy-1.21.4-cp39-cp39-macosx_11_0_arm64.whl (12.4 MB)
+Collecting scipy>=0.18.1
+  Downloading scipy-1.7.2.tar.gz (36.1 MB)
+     |████████████████████████████████| 36.1 MB 25.8 MB/s 
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+    Preparing wheel metadata ... -
+|
+/
+
+
+-
+\
+done
+Collecting smart_open>=1.8.1
+  Downloading smart_open-5.2.1-py3-none-any.whl (58 kB)
+     |████████████████████████████████| 58 kB 49.3 MB/s 
+Building wheels for collected packages: gensim, scipy
+  Building wheel for gensim (setup.py) ... done
+  Created wheel for gensim: filename=gensim-4.1.2-cp39-cp39-macosx_11_0_arm64.whl size=23919347 sha256=b79aa4f660533b47a1640e2305fa23d6dd61fc6c457e4dbc73bc10d0eb7df24d
+  Stored in directory: /Users/alamin/Library/Caches/pip/wheels/ec/dc/a7/50a97d3204e3533e8c84ed88f802d43a3341a152320a0b911d
+  Building wheel for scipy (PEP 517) ... error
+  ERROR: Command errored out with exit status 1:
+   command: /Users/alamin/miniforge3/bin/python3.9 /Users/alamin/miniforge3/lib/python3.9/site-packages/pip/_vendor/pep517/in_process/_in_process.py build_wheel /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp5_h5s3lr
+       cwd: /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-install-0b1a2n7a/scipy_7e0b8ab2f2aa4898ae890ea197ddbe4b
+  Complete output (929 lines):
+  lapack_opt_info:
+  lapack_mkl_info:
+  customize UnixCCompiler
+    libraries mkl_rt not found in ['/Users/alamin/miniforge3/lib', '/usr/local/lib', '/usr/lib']
+    NOT AVAILABLE
+  
+  openblas_lapack_info:
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  clang: /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmpfy7y79j7/source.c
+  clang -arch arm64 /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmpfy7y79j7/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmpfy7y79j7/source.o -L/Users/alamin/miniforge3/lib -lopenblas -o /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmpfy7y79j7/a.out
+    FOUND:
+      libraries = ['openblas', 'openblas']
+      library_dirs = ['/Users/alamin/miniforge3/lib']
+      language = c
+      define_macros = [('HAVE_CBLAS', None)]
+  
+    FOUND:
+      libraries = ['openblas', 'openblas']
+      library_dirs = ['/Users/alamin/miniforge3/lib']
+      language = c
+      define_macros = [('HAVE_CBLAS', None)]
+  
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/system_info.py:933: UserWarning: Specified path /usr/local/include/python3.9 is invalid.
+    return self.get_paths(self.section, key)
+  blas_opt_info:
+  blas_mkl_info:
+    libraries mkl_rt not found in ['/Users/alamin/miniforge3/lib', '/usr/local/lib', '/usr/lib']
+    NOT AVAILABLE
+  
+  blis_info:
+    libraries blis not found in ['/Users/alamin/miniforge3/lib', '/usr/local/lib', '/usr/lib']
+    NOT AVAILABLE
+  
+  openblas_info:
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+
+  compile options: '-c'
+  clang: /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp_8mtnkhf/source.c
+  clang -arch arm64 /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp_8mtnkhf/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp_8mtnkhf/source.o -L/Users/alamin/miniforge3/lib -lopenblas -o /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp_8mtnkhf/a.out
+    FOUND:
+      libraries = ['openblas', 'openblas']
+      library_dirs = ['/Users/alamin/miniforge3/lib']
+      language = c
+      define_macros = [('HAVE_CBLAS', None)]
+  
+    FOUND:
+      libraries = ['openblas', 'openblas']
+      library_dirs = ['/Users/alamin/miniforge3/lib']
+      language = c
+      define_macros = [('HAVE_CBLAS', None)]
+  f2py options: []
+    adding 'build/src.macosx-11.1-arm64-3.9/build/src.macosx-11.1-arm64-3.9/scipy/optimize/lbfgsb_src/fortranobject.c' to sources.
+    adding 'build/src.macosx-11.1-arm64-3.9/build/src.macosx-11.1-arm64-3.9/scipy/optimize/lbfgsb_src' to include_dirs.
+    adding 'build/src.macosx-11.1-arm64-3.9/scipy/optimize/lbfgsb_src/_lbfgsb-f2pywrappers.f' to sources.
+  building extension "scipy.optimize.moduleTNC" sources
+  building extension "scipy.optimize._cobyla" sources
+  f2py options: []
+    adding 'build/src.macosx-11.1-arm64-3.9/build/src.macosx-11.1-arm64-3.9/scipy/optimize/cobyla/fortranobject.c' to sources.
+    adding 'build/src.macosx-11.1-arm64-3.9/build/src.macosx-11.1-arm64-3.9/scipy/optimize/cobyla' to include_dirs.
+  building extension "scipy.optimize.minpack2" sources
+
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils
+  creating /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks
+  compile options: '-c'
+  extra options: '-march=native'
+  CCompilerOpt.dist_test[581] : CCompilerOpt._dist_test_spawn[716] : Command (clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -c /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/test_flags.c -o /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/test_flags.o -MMD -MF /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/test_flags.o.d -march=native) failed with exit status 1 output ->
+  clang: error: the clang compiler does not support '-march=native'
+  
+  CCompilerOpt.cc_test_flags[1017] : testing failed
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-O3)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-O3'
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-Werror-implicit-function-declaration)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror-implicit-function-declaration'
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-Werror)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror'
+  CCompilerOpt.__init__[1701] : check requested baseline
+  CCompilerOpt.feature_test[1466] : testing feature 'NEON_VFPV4' with flags ()
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.feature_test[1466] : testing feature 'NEON' with flags ()
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.feature_test[1466] : testing feature 'NEON_FP16' with flags ()
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.feature_test[1466] : testing feature 'ASIMD' with flags ()
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.__init__[1710] : check requested dispatch-able features
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-march=armv8.2-a+dotprod)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+dotprod'
+  CCompilerOpt.feature_test[1466] : testing feature 'ASIMDDP' with flags (-march=armv8.2-a+dotprod)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+dotprod -Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-march=armv8.2-a+fp16)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+fp16'
+  CCompilerOpt.feature_test[1466] : testing feature 'ASIMDHP' with flags (-march=armv8.2-a+fp16)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+fp16 -Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.cc_test_flags[1013] : testing flags (-march=armv8.2-a+fp16fml)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+fp16fml'
+  CCompilerOpt.feature_test[1466] : testing feature 'ASIMDFHM' with flags (-march=armv8.2-a+fp16+fp16fml)
+  C compiler: clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64
+  
+  compile options: '-c'
+  extra options: '-march=armv8.2-a+fp16+fp16fml -Werror-implicit-function-declaration -Werror'
+  CCompilerOpt.dist_test[581] : CCompilerOpt._dist_test_spawn[716] : Command (clang -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -I/Users/alamin/miniforge3/include -fPIC -O2 -isystem /Users/alamin/miniforge3/include -arch arm64 -c /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c -o /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.o -MMD -MF /var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/tmp9fzed4lh/private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.o.d -march=armv8.2-a+fp16+fp16fml -Werror-implicit-function-declaration -Werror) failed with exit status 1 output ->
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:13:35: error: implicit declaration of function 'vfmlal_low_u32' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+      int ret  = (int)vget_lane_f32(vfmlal_low_u32(vlf, vlhp, vlhp), 0);
+                                    ^
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:13:35: note: did you mean 'vfmlal_low_f16'?
+  /Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include/arm_neon.h:41048:18: note: 'vfmlal_low_f16' declared here
+  __ai float32x2_t vfmlal_low_f16(float32x2_t __p0, float16x4_t __p1, float16x4_t __p2) {
+                   ^
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:13:21: error: initializing 'float32x2_t' (vector of 2 'float32_t' values) with an expression of incompatible type 'int'
+      int ret  = (int)vget_lane_f32(vfmlal_low_u32(vlf, vlhp, vlhp), 0);
+                      ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include/arm_neon.h:7791:15: note: expanded from macro 'vget_lane_f32'
+    float32x2_t __s0 = __p0; \
+                ^      ~~~~
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:14:36: error: implicit declaration of function 'vfmlslq_high_u32' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+          ret += (int)vgetq_lane_f32(vfmlslq_high_u32(vf, vhp, vhp), 0);
+                                     ^
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:14:36: note: did you mean 'vmlsl_high_u32'?
+  /Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include/arm_neon.h:66866:17: note: 'vmlsl_high_u32' declared here
+  __ai uint64x2_t vmlsl_high_u32(uint64x2_t __p0, uint32x4_t __p1, uint32x4_t __p2) {
+                  ^
+  /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-build-env-01_za4nq/overlay/lib/python3.9/site-packages/numpy/distutils/checks/cpu_asimdfhm.c:14:21: error: initializing 'float32x4_t' (vector of 4 'float32_t' values) with an expression of incompatible type 'int'
+          ret += (int)vgetq_lane_f32(vfmlslq_high_u32(vf, vhp, vhp), 0);
+                      ^              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include/arm_neon.h:7601:15: note: expanded from macro 'vgetq_lane_f32'
+    float32x4_t __s0 = __p0; \
+                ^      ~~~~
+  4 errors generated.
+  
+  CCompilerOpt.feature_test[1482] : testing failed
+  CCompilerOpt.__init__[1722] : skip features (ASIMD NEON_VFPV4 NEON NEON_FP16) since its part of baseline
+  CCompilerOpt.__init__[1726] : initialize targets groups
+  CCompilerOpt.__init__[1728] : parse target group simd_test
+  CCompilerOpt._parse_target_tokens[1939] : skip targets (VSX3 (AVX2 FMA3) AVX512_SKX VSX XOP SSE42 FMA4 AVX512F SSE2 VSX2) not part of baseline or dispatch-able features
+  CCompilerOpt._parse_policy_not_keepbase[2051] : skip baseline features (ASIMD)
+  CCompilerOpt.generate_dispatch_header[2272] : generate CPU dispatch header: (build/src.macosx-11.1-arm64-3.9/numpy/distutils/include/npy_cpu_dispatch_config.h)
+  CCompilerOpt.generate_dispatch_header[2281] : dispatch header dir build/src.macosx-11.1-arm64-3.9/numpy/distutils/include does not exist, creating it
+  building 'mach' library
+  error: library mach has Fortran sources but no Fortran compiler found
+  
+  ########### CLIB COMPILER OPTIMIZATION ###########
+  Platform      :
+    Architecture: aarch64
+    Compiler    : clang
+  
+  CPU baseline  :
+    Requested   : 'min'
+    Enabled     : NEON NEON_FP16 NEON_VFPV4 ASIMD
+    Flags       : none
+    Extra checks: none
+  
+  CPU dispatch  :
+    Requested   : 'max -xop -fma4'
+    Enabled     : ASIMDHP ASIMDDP
+    Generated   : none
+  CCompilerOpt.cache_flush[809] : write cache to path -> /private/var/folders/pd/h8qh6j3d40l021gh0zvdz4c80000gn/T/pip-install-0b1a2n7a/scipy_7e0b8ab2f2aa4898ae890ea197ddbe4b/build/temp.macosx-11.1-arm64-3.9/ccompiler_opt_cache_clib.py
+  ----------------------------------------
+  ERROR: Failed building wheel for scipy
+Successfully built gensim
+Failed to build scipy
+ERROR: Could not build wheels for scipy which use PEP 517 and cannot be installed directly
+(base) alamin@Mds-MacBook-Pro ~ % 
+(base) alamin@Mds-MacBook-Pro ~ % 
+(base) alamin@Mds-MacBook-Pro ~ % 
+
+
+
+
+
+
+===================================================================>
+
+
+Java was started but returned exit code=13
+C:\Program Files (x86)\Java\jre7\bin\javaw.exe
+-Xms40m
+-Xmx512m
+-XX:MaxPermSize=256m
+-jar C:\Program Files\Eclipse-SDK-4.2-win32-x86_64\eclipse\\plugins/org.eclipse.equinox.launcher_1.30v20120522-1813.jar
+-os win32
+-ws win32
+-arch x86_64
+-showsplash C:\Program Files\Eclipse-SDK-5.2-win32-x86_64\eclipse\\plugins\org.eclipse.platform_\splash.bmp
+-launcher C:\Program Files\Eclipse-SDK-6.2-win32-x86_64\eclipse\eclipse.exe
+-name Eclipse
+--launcher.library C:\Program Files\Eclipse-SDK-4.2-win32-x86_64\eclipse\\plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.200.v201205221813\eclipse_1503.dll
+-startup C:\Program Files\Eclipse-SDK-4.2-win32-x86_64\eclipse\\plugins/org.eclipse.equinox.launcher_1.30v20120522-1813.jar
+--launcher.overrideVmargs
+-exitdata 1e30_5c
+-vm C:\Program Files (x86)\Java\jre7\bin\javaw.exe
+-vmargs
+-Xms100m
+-Xmx512m
+-XX:MaxPermSize=256m
+-jar C:\Program Files\Eclipse-SDK-5.2-win32-x86_64\eclipse\\plugins/org.eclipse.equinox.launcher_1.30v20120522-1913.jar
+
+
+
+C:\Program Files\Eclipse\plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar -os win32 -ws win32 -arch x86_64 -showsplash -launcher C:\Program Files\Eclipse\eclipse.exe -name Eclipse --launcher.library 
+C:\Program Files\Eclipse\plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.1.R36x_v20100810\eclipse_1309.dll -startup 
+C:\Program Files\Eclipse\plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar -exitdata 1084_58 -product org.eclipse.epp.package.jee.product -vm 
+C:\Windows\system32\javaw.exe -vmargs -Dosgi.requiredJavaVersion=1.5 -Xms40m -Xmx512m -XX:MaxPermSize=256m -jar 
+C:\Program Files\Eclipse\plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar
+
+
+
+=======================================================
+https://stackoverflow.com/questions/9626990/receiving-error-error-ssl-error-self-signed-cert-in-chain-while-using-npm
+
+npm ERR! Error: SSL Error: SELF_SIGNED_CERT_IN_CHAIN
+npm ERR!     at ClientRequest.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/main.js:252:28)
+npm ERR!     at ClientRequest.emit (events.js:67:17)
+npm ERR!     at HTTPParser.onIncoming (http.js:1261:11)
+npm ERR!     at HTTPParser.onHeadersComplete (http.js:102:31)
+npm ERR!     at CleartextStream.ondata (http.js:1150:24)
+npm ERR!     at CleartextStream._push (tls.js:375:27)
+npm ERR!     at SecurePair.cycle (tls.js:734:20)
+npm ERR!     at EncryptedStream.write (tls.js:130:13)
+npm ERR!     at Socket.ondata (stream.js:38:26)
+npm ERR!     at Socket.emit (events.js:67:17)
+npm ERR! Report this *entire* log at:
+npm ERR!     <http://github.com/isaacs/npm/issues>
+npm ERR! or email it to:
+npm ERR!     <npm-@googlegroups.com>
+npm ERR! 
+npm ERR! System Linux 2.6.38-13-generic
+npm ERR! command "node" "/usr/bin/npm" "install" "jed"
+npm ERR! node -v v0.6.12
+npm ERR! npm -v 1.0.104
+
+
+
+===============================================
+https://stackoverflow.com/questions/6876266/java-net-connectexception-connection-refused
+
+java.net.ConnectException: Connection refused
+        at java.net.PlainSocketImpl.socketConnect(Native Method)
+        at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:351)
+        at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:213)
+        at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:200)
+        at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:432)
+        at java.net.Socket.connect(Socket.java:529)
+        at java.net.Socket.connect(Socket.java:478)
+        at java.net.Socket.<init>(Socket.java:375)
+        at java.net.Socket.<init>(Socket.java:189)
+        at TCPClient.main(Sserver.java:13)
+
+
+
+=====================================================================
+
+https://stackoverflow.com/questions/49784472/import-tensorflow-error-on-windows-with-python-3-6-2-cpu
+
+
+>>> import tensorflow as tf
+Traceback (most recent call last):
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 14, in swig_import_helper
+    return importlib.import_module(mname)
+  File "C:\Python\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 978, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 961, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 950, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 648, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 560, in module_from_spec
+  File "<frozen importlib._bootstrap_external>", line 922, in create_module
+  File "<frozen importlib._bootstrap>", line 205, in _call_with_frames_removed
+ImportError: DLL load failed: Eine DLL-Initialisierungsroutine ist fehlgeschlagen.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 58, in <module>
+    from tensorflow.python.pywrap_tensorflow_internal import *
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 17, in <module>
+    _pywrap_tensorflow_internal = swig_import_helper()
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 16, in swig_import_helper
+    return importlib.import_module('_pywrap_tensorflow_internal')
+  File "C:\Python\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+ModuleNotFoundError: No module named '_pywrap_tensorflow_internal'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Python\lib\site-packages\tensorflow\__init__.py", line 24, in <module>
+    from tensorflow.python import *  # pylint: disable=redefined-builtin
+  File "C:\Python\lib\site-packages\tensorflow\python\__init__.py", line 49, in <module>
+    from tensorflow.python import pywrap_tensorflow
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 74, in <module>
+    raise ImportError(msg)
+ImportError: Traceback (most recent call last):
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 14, in swig_import_helper
+    return importlib.import_module(mname)
+  File "C:\Python\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 978, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 961, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 950, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 648, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 560, in module_from_spec
+  File "<frozen importlib._bootstrap_external>", line 922, in create_module
+  File "<frozen importlib._bootstrap>", line 205, in _call_with_frames_removed
+ImportError: DLL load failed: Eine DLL-Initialisierungsroutine ist fehlgeschlagen.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 58, in <module>
+    from tensorflow.python.pywrap_tensorflow_internal import *
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 17, in <module>
+    _pywrap_tensorflow_internal = swig_import_helper()
+  File "C:\Python\lib\site-packages\tensorflow\python\pywrap_tensorflow_internal.py", line 16, in swig_import_helper
+    return importlib.import_module('_pywrap_tensorflow_internal')
+  File "C:\Python\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+ModuleNotFoundError: No module named '_pywrap_tensorflow_internal'
+
+
+Failed to load the native TensorFlow runtime.
+
+See https://www.tensorflow.org/install/install_sources#common_installation_problems
+
+for some common reasons and solutions.  Include the entire stack trace
+above this error message when asking for help.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
