@@ -1,9 +1,17 @@
 # StacerBot: A Stacktrace Search Engine for Stack Overflow
 
 ## Links
-**Video Demonstration:** https://github.com/al-alamin/StracerBot/Project_demonstration.mov
+**Report:** https://github.com/al-alamin/StracerBot/files/8595502/Project_report.pdf
 
-**Report:** https://github.com/al-alamin/StracerBot/project_report.pdf
+**Presentation:** [619_data_analytics_project_presentation.pptx](https://github.com/al-alamin/StracerBot/files/8595529/619_data_analytics_project_presentation.pptx)
+
+**Video Demonstration:** https://user-images.githubusercontent.com/13589148/166086963-a81427bb-c456-4619-8683-c10ed5ecf01f.mp4
+
+https://user-images.githubusercontent.com/13589148/166086963-a81427bb-c456-4619-8683-c10ed5ecf01f.mp4
+
+
+
+
 
 <br><br>
 
