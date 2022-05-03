@@ -1,4 +1,4 @@
-# StacerBot: A Stacktrace Search Engine for Stack Overflow
+# StracerBot: A Stacktrace Search Engine for Stack Overflow
 
 ## Links
 **Report:** https://github.com/al-alamin/StracerBot/files/8595502/Project_report.pdf
@@ -17,6 +17,7 @@ https://user-images.githubusercontent.com/13589148/166086963-a81427bb-c456-4619-
 
 
 ## Project Overview
+This research project was developed as a part of course project for Large Scale Data Analytics (ENEL-619.3)
 
 ## Dataset
 Stack Exchange Data dump June, 2021. This contains all the data from 70+ stack exange websites such as (Stack Overflow, Server Fault)
