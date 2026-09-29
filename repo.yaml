@@ -1,0 +1,19 @@
+schema_version: 1
+summary: A course research project for searching Stack Overflow stack traces, with
+  data-processing scripts and a demonstration web application.
+state: unknown
+intended_readers:
+- Researchers and students studying the Stacktrace search course project.
+consult_when:
+- Understanding Stack Exchange preprocessing, search research or the demonstration
+  application.
+watch_when:
+- Changes to readme.md, data-processing/search scripts or demonstration documentation.
+current_capabilities:
+- readme.md documents XML-to-CSV processing, code-segment extraction, TF-IDF preparation
+  and metadata extraction; Scripts and batch_jobs directories are tracked.
+- The root tree includes a web_application/ demonstration and research report/presentation
+  material; runtime and research results were not evaluated.
+planned_capabilities:
+- The historical README task list describes ongoing search research, summarization
+  and possible distributed-processing extensions; present completion is unverified.
